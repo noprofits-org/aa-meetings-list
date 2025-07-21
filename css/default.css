@@ -1,0 +1,62 @@
+body {
+    font-family: Arial, sans-serif;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    line-height: 1.6;
+}
+
+.meeting {
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.day-meetings {
+    margin-bottom: 40px;
+}
+
+h1 {
+    color: #333;
+    text-align: center;
+}
+
+h2 {
+    color: #333;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+    margin-top: 30px;
+}
+
+h3 {
+    color: #555;
+    margin-bottom: 10px;
+}
+
+p {
+    margin: 5px 0;
+    color: #666;
+}
+
+header, footer {
+    text-align: center;
+    padding: 20px 0;
+    border-bottom: 1px solid #eee;
+}
+
+footer {
+    border-top: 1px solid #eee;
+    border-bottom: none;
+    margin-top: 40px;
+}
+
+nav a {
+    margin: 0 10px;
+    text-decoration: none;
+    color: #333;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}

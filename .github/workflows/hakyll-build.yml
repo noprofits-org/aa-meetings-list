@@ -1,0 +1,43 @@
+name: Build and Deploy Hakyll Site
+on:
+  schedule:
+    - cron: '0 6 * * 1'  # Every Monday at 6 AM UTC
+  workflow_dispatch:  # Manual triggers
+  push:
+    branches: [ main ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        
+      - name: Setup Haskell
+        uses: haskell/actions/setup@v2
+        with:
+          ghc-version: '9.4.8'
+          cabal-version: 'latest'
+          
+      - name: Build Hakyll site
+        run: |
+          cabal update
+          cabal build
+          cabal exec site clean
+          cabal exec site build
+          
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+        
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './_site'
+          
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4
