@@ -15,6 +15,7 @@ import           Data.Time
 import           GHC.Generics
 import           Hakyll
 import           Network.HTTP.Conduit
+import           System.FilePath (takeBaseName)
 
 
 --------------------------------------------------------------------------------
@@ -67,13 +68,30 @@ formatTime12Hour time =
                 _ -> time
         _ -> time
 
--- Fetch meetings from the Seattle AA API with timestamp
-fetchMeetingsWithTime :: IO (Either String ([Meeting], String))
-fetchMeetingsWithTime = do
+-- Fetch Seattle meetings with timestamp
+fetchSeattleMeetingsWithTime :: IO (Either String ([Meeting], String))
+fetchSeattleMeetingsWithTime = do
     currentTime <- getCurrentTime
     let timeStr = formatTime defaultTimeLocale "%B %e, %Y at %l:%M %p %Z" currentTime
     result <- try $ do
         request <- parseRequest "https://cors-proxy-xi-ten.vercel.app/api/proxy?url=https://www.seattleaa.org/wp-content/tsml-cache-cbdb25180b.json"
+        manager <- newManager tlsManagerSettings
+        response <- httpLbs request manager
+        let body = responseBody response
+        case eitherDecode body of
+            Left err -> return $ Left $ "JSON decode error: " ++ err
+            Right meetings -> return $ Right (meetings, timeStr)
+    case result of
+        Left e -> return $ Left $ "Network error: " ++ show (e :: SomeException)
+        Right parseResult -> return parseResult
+
+-- Fetch New York meetings with timestamp
+fetchNewYorkMeetingsWithTime :: IO (Either String ([Meeting], String))
+fetchNewYorkMeetingsWithTime = do
+    currentTime <- getCurrentTime
+    let timeStr = formatTime defaultTimeLocale "%B %e, %Y at %l:%M %p %Z" currentTime
+    result <- try $ do
+        request <- parseRequest "https://cors-proxy-xi-ten.vercel.app/api/proxy?url=https://www.nyintergroup.org/wp-content/tsml-cache-7fd5dcc047.json"
         manager <- newManager tlsManagerSettings
         response <- httpLbs request manager
         let body = responseBody response
@@ -130,18 +148,34 @@ formatMeetingsHTML meetings =
         (case notes meeting of Nothing -> ""; Just n -> "  <p>Notes: " ++ T.unpack n ++ "</p>\n") ++
         "</div>\n\n"
 
--- Custom compiler for meetings HTML
-meetingsCompiler :: Compiler (Item String)
-meetingsCompiler = do
-    meetingsResult <- unsafeCompiler fetchMeetingsWithTime
+-- Seattle meetings compiler
+seattleMeetingsCompiler :: Compiler (Item String)
+seattleMeetingsCompiler = do
+    meetingsResult <- unsafeCompiler fetchSeattleMeetingsWithTime
     case meetingsResult of
-        Left err -> makeItem $ "<p>Error loading meetings: " ++ err ++ "</p>"
+        Left err -> makeItem $ "<p>Error loading Seattle meetings: " ++ err ++ "</p>"
         Right (meetings, _) -> makeItem $ formatMeetingsHTML meetings
 
--- Custom compiler for timestamp
-timestampCompiler :: Compiler (Item String)
-timestampCompiler = do
-    meetingsResult <- unsafeCompiler fetchMeetingsWithTime
+-- Seattle timestamp compiler
+seattleTimestampCompiler :: Compiler (Item String)
+seattleTimestampCompiler = do
+    meetingsResult <- unsafeCompiler fetchSeattleMeetingsWithTime
+    case meetingsResult of
+        Left _ -> makeItem "Unknown"
+        Right (_, timeStr) -> makeItem timeStr
+
+-- New York meetings compiler
+newYorkMeetingsCompiler :: Compiler (Item String)
+newYorkMeetingsCompiler = do
+    meetingsResult <- unsafeCompiler fetchNewYorkMeetingsWithTime
+    case meetingsResult of
+        Left err -> makeItem $ "<p>Error loading New York meetings: " ++ err ++ "</p>"
+        Right (meetings, _) -> makeItem $ formatMeetingsHTML meetings
+
+-- New York timestamp compiler
+newYorkTimestampCompiler :: Compiler (Item String)
+newYorkTimestampCompiler = do
+    meetingsResult <- unsafeCompiler fetchNewYorkMeetingsWithTime
     case meetingsResult of
         Left _ -> makeItem "Unknown"
         Right (_, timeStr) -> makeItem timeStr
@@ -163,26 +197,58 @@ main = hakyll $ do
             >>= loadAndApplyTemplate "templates/default.html" defaultContext
             >>= relativizeUrls
 
-    -- Create meetings data
-    create ["meetings.html"] $ do
+    -- Create Seattle meetings data
+    create ["seattle-meetings.html"] $ do
         route idRoute
-        compile meetingsCompiler
+        compile seattleMeetingsCompiler
 
-    -- Create timestamp data
-    create ["timestamp.html"] $ do
+    -- Create Seattle timestamp data
+    create ["seattle-timestamp.html"] $ do
         route idRoute
-        compile timestampCompiler
+        compile seattleTimestampCompiler
+
+    -- Create New York meetings data
+    create ["newyork-meetings.html"] $ do
+        route idRoute
+        compile newYorkMeetingsCompiler
+
+    -- Create New York timestamp data
+    create ["newyork-timestamp.html"] $ do
+        route idRoute
+        compile newYorkTimestampCompiler
 
     match "posts/*" $ do
         route $ setExtension "html"
         compile $ do
-            meetingsItem <- load "meetings.html"
-            timestampItem <- load "timestamp.html"
+            -- Load the appropriate meetings and timestamp data based on the post
+            postPath <- getUnderlying
+            let postName = takeBaseName $ toFilePath postPath
+            
+            (meetingsItem, timestampItem) <- case postName of
+                "seattle-meetings" -> do
+                    m <- load "seattle-meetings.html"
+                    t <- load "seattle-timestamp.html"
+                    return (m, t)
+                "new-york-meetings" -> do
+                    m <- load "newyork-meetings.html"
+                    t <- load "newyork-timestamp.html"
+                    return (m, t)
+                _ -> do
+                    -- Default case for other posts
+                    m <- makeItem ""
+                    t <- makeItem ""
+                    return (m, t)
+            
             let meetingsHtml = itemBody meetingsItem
                 timestampStr = itemBody timestampItem
+            
             body <- itemBody <$> getResourceBody
             let processedBody = replaceAll "LAST_UPDATED_TIME" (const timestampStr) body
-                finalBody = replaceAll "MEETINGS_DATA" (const meetingsHtml) processedBody
+                finalBody = case postName of
+                    "seattle-meetings" -> replaceAll "SEATTLE_MEETINGS_DATA" (const meetingsHtml) processedBody
+                    "new-york-meetings" -> replaceAll "NEW_YORK_MEETINGS_DATA" (const meetingsHtml) processedBody
+                    _ -> processedBody
+            
             makeItem finalBody
                 >>= renderPandoc
                 >>= loadAndApplyTemplate "templates/post.html"    postCtx
@@ -202,7 +268,6 @@ main = hakyll $ do
                 >>= loadAndApplyTemplate "templates/archive.html" archiveCtx
                 >>= loadAndApplyTemplate "templates/default.html" archiveCtx
                 >>= relativizeUrls
-
 
     match "index.html" $ do
         route idRoute

@@ -10,4 +10,4 @@ This page contains all AA meetings for the Greater Seattle Intergroup, updated a
 
 **Last updated:** LAST_UPDATED_TIME
 
-MEETINGS_DATA
+SEATTLE_MEETINGS_DATA

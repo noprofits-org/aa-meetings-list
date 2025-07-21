@@ -1,62 +1,418 @@
+/* Reset and base styles */
+* {
+    box-sizing: border-box;
+}
+
 body {
-    font-family: Arial, sans-serif;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 20px;
+    padding: 16px;
     line-height: 1.6;
-}
-
-.meeting {
-    margin-bottom: 20px;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-}
-
-.day-meetings {
-    margin-bottom: 40px;
-}
-
-h1 {
     color: #333;
+    background-color: #fff;
+    font-size: 16px;
+}
+
+/* Typography */
+h1 {
+    color: #2c3e50;
     text-align: center;
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
 }
 
 h2 {
-    color: #333;
-    border-bottom: 2px solid #eee;
-    padding-bottom: 10px;
-    margin-top: 30px;
+    color: #34495e;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 8px;
+    margin: 2rem 0 1rem 0;
+    font-size: 1.5rem;
+    font-weight: 500;
 }
 
 h3 {
-    color: #555;
-    margin-bottom: 10px;
+    color: #2c3e50;
+    margin: 0 0 0.5rem 0;
+    font-size: 1.125rem;
+    font-weight: 500;
 }
 
 p {
-    margin: 5px 0;
-    color: #666;
+    margin: 0.25rem 0;
+    color: #555;
+    line-height: 1.5;
 }
 
-header, footer {
+/* Logo styling */
+.aa-logo {
+    display: block;
+    margin: 0 auto 2rem auto;
+    max-width: 250px;
+    height: auto;
+}
+
+/* Meeting cards */
+.meeting {
+    margin-bottom: 1rem;
+    padding: 1rem;
+    border: 1px solid #e1e8ed;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.2s ease;
+}
+
+.meeting:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.meeting h3 {
+    color: #2980b9;
+    border-bottom: 1px solid #ecf0f1;
+    padding-bottom: 0.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.meeting p {
+    margin: 0.5rem 0;
+    display: flex;
+    align-items: flex-start;
+}
+
+.meeting p strong,
+.meeting p::before {
+    min-width: 80px;
+    font-weight: 600;
+    color: #34495e;
+}
+
+/* Add semantic labels for better AI parsing */
+.meeting p:nth-of-type(1)::before { content: "Time: "; }
+.meeting p:nth-of-type(2)::before { content: "Location: "; }
+.meeting p:nth-of-type(3)::before { content: "Address: "; }
+.meeting p:nth-of-type(4)::before { content: "Types: "; }
+.meeting p:nth-of-type(5)::before { content: "Notes: "; }
+
+/* Day sections */
+.day-meetings {
+    margin-bottom: 2.5rem;
+}
+
+/* Navigation */
+nav {
     text-align: center;
-    padding: 20px 0;
-    border-bottom: 1px solid #eee;
-}
-
-footer {
-    border-top: 1px solid #eee;
-    border-bottom: none;
-    margin-top: 40px;
+    margin-bottom: 2rem;
+    padding: 1rem 0;
 }
 
 nav a {
-    margin: 0 10px;
+    margin: 0 1rem;
     text-decoration: none;
-    color: #333;
+    color: #2980b9;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    transition: all 0.2s ease;
 }
 
 nav a:hover {
+    background-color: #ecf0f1;
+    text-decoration: none;
+}
+
+/* Header and footer */
+header, footer {
+    text-align: center;
+    padding: 1.5rem 0;
+    border-bottom: 1px solid #ecf0f1;
+}
+
+footer {
+    border-top: 1px solid #ecf0f1;
+    border-bottom: none;
+    margin-top: 3rem;
+    color: #7f8c8d;
+    font-size: 0.9rem;
+}
+
+/* Technical note styling */
+.technical-note {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-left: 4px solid #3498db;
+    padding: 1rem;
+    margin: 2rem 0;
+    border-radius: 4px;
+}
+
+.technical-note p {
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+/* Regions list layout */
+.regions-list {
+    margin: 2rem 0;
+    padding: 1.5rem;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    border-left: 4px solid #3498db;
+}
+
+.regions-list h4 {
+    margin: 1.5rem 0 0.5rem 0;
+    color: #2980b9;
+}
+
+.regions-list h4:first-child {
+    margin-top: 0;
+}
+
+.regions-list h4 a {
+    text-decoration: none;
+    color: inherit;
+    font-size: 1.25rem;
+}
+
+.regions-list h4 a:hover {
+    color: #1f639a;
     text-decoration: underline;
+}
+
+.regions-list p {
+    margin: 0 0 1rem 0;
+    color: #666;
+    font-size: 0.95rem;
+}
+
+/* Region header styling */
+.region-header {
+    text-align: center;
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border-radius: 8px;
+    border-left: 4px solid #3498db;
+}
+
+.region-header h1 {
+    margin-bottom: 0.5rem;
+    color: #2c3e50;
+}
+
+.meeting-count {
+    font-size: 1.1rem;
+    color: #666;
+    font-weight: 500;
+}
+
+/* AI features section */
+.ai-features {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-left: 4px solid #28a745;
+    padding: 1.5rem;
+    margin: 2rem 0;
+    border-radius: 4px;
+}
+
+.ai-features h3 {
+    margin-top: 0;
+    color: #28a745;
+}
+
+.ai-features ul {
+    margin: 1rem 0 0 0;
+    padding-left: 1.5rem;
+}
+
+.ai-features li {
+    margin-bottom: 0.5rem;
+    line-height: 1.6;
+}
+
+.ai-features strong {
+    color: #2c3e50;
+}
+
+/* Recent updates section */
+.recent-updates {
+    margin: 2rem 0;
+}
+
+.recent-updates h3 {
+    color: #2c3e50;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 8px;
+}
+
+/* Enhanced meeting details */
+.meeting-details p {
+    margin: 0.25rem 0;
+    display: flex;
+    align-items: flex-start;
+}
+
+.meeting-details strong {
+    min-width: 80px;
+    font-weight: 600;
+    color: #34495e;
+    margin-right: 8px;
+}
+
+.meeting-time, .meeting-location, .meeting-address, .meeting-types, .meeting-notes {
+    font-size: 0.95rem;
+}
+
+/* Day sections with anchors */
+h2[id^="day-"] {
+    scroll-margin-top: 2rem;
+}
+
+/* Links */
+a {
+    color: #2980b9;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #1f639a;
+    text-decoration: underline;
+}
+
+/* Responsive design */
+@media screen and (max-width: 768px) {
+    body {
+        padding: 12px;
+        font-size: 15px;
+    }
+    
+    h1 {
+        font-size: 1.75rem;
+        margin-bottom: 1rem;
+    }
+    
+    h2 {
+        font-size: 1.25rem;
+        margin: 1.5rem 0 0.75rem 0;
+    }
+    
+    h3 {
+        font-size: 1rem;
+    }
+    
+    .meeting {
+        padding: 0.75rem;
+        margin-bottom: 0.75rem;
+    }
+    
+    .meeting p {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .meeting p::before {
+        min-width: auto;
+        margin-bottom: 0.25rem;
+    }
+    
+    nav a {
+        margin: 0.25rem;
+        display: inline-block;
+        padding: 0.5rem 0.75rem;
+        font-size: 0.9rem;
+    }
+    
+    .aa-logo {
+        max-width: 150px;
+        margin-bottom: 1.5rem;
+    }
+    
+    .day-meetings {
+        margin-bottom: 2rem;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    body {
+        padding: 8px;
+        font-size: 14px;
+    }
+    
+    h1 {
+        font-size: 1.5rem;
+    }
+    
+    h2 {
+        font-size: 1.125rem;
+    }
+    
+    .meeting {
+        padding: 0.5rem;
+    }
+    
+    nav {
+        margin-bottom: 1rem;
+    }
+    
+    nav a {
+        margin: 0.125rem;
+        padding: 0.375rem 0.5rem;
+        font-size: 0.85rem;
+    }
+}
+
+/* Print styles for better accessibility */
+@media print {
+    body {
+        max-width: none;
+        padding: 0;
+        font-size: 12pt;
+        line-height: 1.4;
+    }
+    
+    .meeting {
+        break-inside: avoid;
+        box-shadow: none;
+        border: 1px solid #ccc;
+        margin-bottom: 0.5rem;
+        padding: 0.5rem;
+    }
+    
+    nav, .technical-note {
+        display: none;
+    }
+    
+    h2 {
+        page-break-after: avoid;
+    }
+}
+
+/* Focus styles for accessibility */
+a:focus, 
+nav a:focus {
+    outline: 2px solid #3498db;
+    outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .meeting {
+        border: 2px solid #000;
+    }
+    
+    h2 {
+        border-bottom-color: #000;
+    }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
 }
