@@ -1,29 +1,44 @@
 ---
-title: Home
+title: AA Meetings Directory
 ---
-<img src="/images/wtchairlogo.png" class="aa-logo" alt="Seattle AA Logo" />
-
-$partial("templates/post-list.html")$
+<img src="/images/wtchairlogo.png" class="aa-logo" alt="AA Meetings Logo" />
 
 <h2>AI-Accessible AA Meetings Directory</h2>
 
-<p>Welcome to the Seattle Area AA Meetings Directory – a searchable, AI-friendly resource for finding Alcoholics Anonymous meetings in the Greater Seattle area.</p>
+<p>Welcome to the comprehensive AA Meetings Directory – a searchable, AI-friendly resource for finding Alcoholics Anonymous meetings across multiple regions.</p>
+
+$regional-content$
+
+<div class="ai-features">
+<h3>🤖 Built for AI Accessibility</h3>
+<p>This directory is specifically designed to work with AI assistants like ChatGPT, Claude, and Gemini. Every meeting is accessible in small, digestible pages that AI can easily read and search.</p>
+<ul>
+<li><strong>Smart Navigation:</strong> Find any meeting in 3 clicks or less</li>
+<li><strong>Enhanced Data:</strong> Complete meeting details including Zoom links, accessibility info, and directions</li>
+<li><strong>Dynamic Updates:</strong> Automatically refreshed from official sources</li>
+<li><strong>Multiple Access Patterns:</strong> Browse by location, time, meeting type, or accessibility needs</li>
+</ul>
+</div>
 
 <h3>Why This Site Exists</h3>
 
-<p>When you ask AI chatbots like ChatGPT, Claude, or Gemini about AA meetings, they often can't help because most meeting websites load their data using JavaScript after the page renders. This makes the meeting information invisible to AI assistants and search engines.</p>
+<p>When you ask AI chatbots about AA meetings, they often can't help because most meeting websites load their data using JavaScript after the page renders. This makes the meeting information invisible to AI assistants and search engines.</p>
 
-<p>The official <a href="https://seattleaa.org/meetings" target="_blank">seattleaa.org/meetings</a> site is an excellent resource for humans, but its JavaScript-loaded content can't be read by AI systems or web crawlers.</p>
+<p>Traditional AA meeting websites are excellent resources for humans, but their JavaScript-loaded content can't be read by AI systems or web crawlers.</p>
 
 <h3>Our Solution</h3>
 
-<p>This directory solves that problem by generating static HTML pages with all meeting information embedded directly in the page content. Now AI assistants can read, search, and help people find AA meetings based on their needs – whether that's location, time, meeting type, or accessibility requirements.</p>
+<p>This directory solves that problem by generating static HTML pages with all meeting information embedded directly in the page content. Now AI assistants can read, search, and help people find AA meetings based on their specific needs.</p>
 
-<h2>Meeting Directories</h2>
-
-<p>Browse our comprehensive meeting listings, automatically updated weekly from the official Seattle AA database:</p>
-
-
+<div class="recent-updates">
+<h3>Recent Enhancements</h3>
+<ul>
+<li><strong>Today's Meetings:</strong> <a href="/meetings/today/">See what's happening today</a></li>
+<li><strong>Online Focus:</strong> <a href="/meetings/online/">Direct Zoom links for all virtual meetings</a></li>
+<li><strong>Accessibility:</strong> <a href="/meetings/wheelchair-accessible/">Wheelchair accessible venues highlighted</a></li>
+<li><strong>Neighborhood Navigation:</strong> Browse by specific areas within each region</li>
+</ul>
+</div>
 
 <div class="technical-note">
 <p><strong>For developers:</strong> This is an open-source solution built with Haskell and Hakyll. The source code and documentation for replicating this system in other regions is available. See our <a href="/about.html">About page</a> for technical details.</p>

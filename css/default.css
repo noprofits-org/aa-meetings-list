@@ -68,6 +68,28 @@ p {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
+/* Enhanced meeting cards for chunked pages */
+.meeting.enhanced {
+    margin-bottom: 1.5rem;
+    padding: 1.25rem;
+}
+
+.meeting.enhanced .meeting-details {
+    margin-top: 0.75rem;
+}
+
+.meeting.enhanced .meeting-details p {
+    margin: 0.5rem 0;
+    display: flex;
+    align-items: flex-start;
+}
+
+.meeting.enhanced .meeting-details strong {
+    min-width: 120px;
+    color: #34495e;
+    font-weight: 600;
+}
+
 .meeting h3 {
     color: #2980b9;
     border-bottom: 1px solid #ecf0f1;
@@ -81,19 +103,14 @@ p {
     align-items: flex-start;
 }
 
-.meeting p strong,
-.meeting p::before {
+.meeting p strong {
     min-width: 80px;
     font-weight: 600;
     color: #34495e;
+    margin-right: 8px;
 }
 
-/* Add semantic labels for better AI parsing */
-.meeting p:nth-of-type(1)::before { content: "Time: "; }
-.meeting p:nth-of-type(2)::before { content: "Location: "; }
-.meeting p:nth-of-type(3)::before { content: "Address: "; }
-.meeting p:nth-of-type(4)::before { content: "Types: "; }
-.meeting p:nth-of-type(5)::before { content: "Notes: "; }
+/* Labels are now provided by the HTML template, no need for CSS pseudo-elements */
 
 /* Day sections */
 .day-meetings {
@@ -149,6 +166,48 @@ footer {
 
 .technical-note p {
     margin: 0;
+    font-size: 0.9rem;
+}
+
+/* Migration notice styling */
+.migration-notice {
+    background: linear-gradient(135deg, #e3f2fd 0%, #f0f8f0 100%);
+    border: 2px solid #2196f3;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin: 2rem 0;
+    box-shadow: 0 2px 8px rgba(33, 150, 243, 0.1);
+}
+
+.migration-notice h3 {
+    margin-top: 0;
+    color: #1976d2;
+    font-size: 1.2rem;
+    border-bottom: none;
+}
+
+.migration-notice ul {
+    margin: 1rem 0;
+    padding-left: 1.5rem;
+}
+
+.migration-notice li {
+    margin-bottom: 0.5rem;
+    line-height: 1.5;
+}
+
+.migration-notice a {
+    color: #1976d2;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.migration-notice a:hover {
+    text-decoration: underline;
+}
+
+.migration-notice em {
+    color: #666;
     font-size: 0.9rem;
 }
 
@@ -313,9 +372,10 @@ a:hover {
         align-items: flex-start;
     }
     
-    .meeting p::before {
+    .meeting p strong {
         min-width: auto;
         margin-bottom: 0.25rem;
+        display: block;
     }
     
     nav a {
@@ -414,5 +474,490 @@ nav a:focus {
         animation-duration: 0.01ms !important;
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
+    }
+}
+
+/* Breadcrumb navigation */
+.breadcrumbs {
+    padding: 0.5rem 0;
+    margin-bottom: 1rem;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.breadcrumbs a {
+    color: #2980b9;
+    text-decoration: none;
+}
+
+.breadcrumbs a:hover {
+    text-decoration: underline;
+}
+
+/* Region cards on landing page */
+.region-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0;
+}
+
+.region-card {
+    display: block;
+    padding: 1.5rem;
+    border: 1px solid #e1e8ed;
+    border-radius: 8px;
+    background-color: #f8f9fa;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    text-decoration: none;
+    color: inherit;
+}
+
+.region-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-decoration: none;
+    color: inherit;
+}
+
+.region-card h3 {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    color: #2980b9;
+}
+
+.region-card:hover h3 {
+    color: #1976d2;
+}
+
+.region-card p {
+    margin-bottom: 1rem;
+}
+
+/* Sub-region lists */
+.subregion-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 0.75rem;
+    margin: 1.5rem 0;
+}
+
+.subregion-item {
+    padding: 0.75rem;
+    background-color: #f8f9fa;
+    border-radius: 4px;
+    border: 1px solid #dee2e6;
+}
+
+.subregion-item a {
+    text-decoration: none;
+    color: #2980b9;
+    display: block;
+}
+
+.subregion-item:hover {
+    background-color: #e9ecef;
+}
+
+/* Day navigation */
+.day-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+    margin: 1.5rem 0;
+}
+
+.day-item {
+    padding: 1rem;
+    background-color: #f8f9fa;
+    border-radius: 4px;
+    border: 1px solid #dee2e6;
+    text-align: center;
+}
+
+.day-item a {
+    text-decoration: none;
+    color: #2980b9;
+    font-weight: 500;
+}
+
+.day-item:hover:not(.disabled) {
+    background-color: #e9ecef;
+}
+
+.day-item.disabled {
+    color: #999;
+    background-color: #f5f5f5;
+}
+
+/* Online meeting indicator */
+.online-info a {
+    color: #28a745;
+    font-weight: 500;
+}
+
+.online-info a:hover {
+    color: #218838;
+}
+
+/* Meeting type badges */
+.meeting-types {
+    margin-top: 0.5rem;
+}
+
+/* Page metadata */
+.last-updated {
+    font-size: 0.9rem;
+    color: #666;
+    font-style: italic;
+}
+
+.meeting-count {
+    font-size: 1.1rem;
+    color: #333;
+    font-weight: 500;
+    margin: 0.5rem 0;
+}
+
+/* Enhanced header sections */
+.region-header, .subregion-header, .meetings-header {
+    text-align: center;
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border-radius: 8px;
+    border-left: 4px solid #3498db;
+}
+
+.region-stats, .subregion-stats, .meetings-stats {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+}
+
+.region-stats span, .subregion-stats span, .meetings-stats span {
+    padding: 0.25rem 0.5rem;
+    background-color: #fff;
+    border-radius: 4px;
+    border: 1px solid #dee2e6;
+    font-size: 0.9rem;
+}
+
+/* Quick access links */
+.quick-access {
+    margin: 2rem 0;
+    padding: 1.5rem;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+}
+
+.quick-links {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.quick-link {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+    text-decoration: none;
+    color: #333;
+    transition: all 0.2s ease;
+}
+
+.quick-link:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-decoration: none;
+    color: #333;
+}
+
+.quick-link .icon {
+    font-size: 1.5rem;
+    margin-right: 0.75rem;
+}
+
+.quick-link.online .icon { filter: hue-rotate(200deg); }
+.quick-link.accessible .icon { filter: hue-rotate(120deg); }
+.quick-link.legacy .icon { filter: grayscale(0.5); }
+
+/* Cross-references */
+.cross-references {
+    margin: 2rem 0;
+    padding: 1rem;
+    background-color: #f8f9fa;
+    border-radius: 6px;
+    border-left: 3px solid #28a745;
+}
+
+.cross-references h3 {
+    margin-top: 0;
+    color: #28a745;
+    font-size: 1.1rem;
+}
+
+.cross-references ul {
+    margin: 0.5rem 0 0 0;
+    padding-left: 1.5rem;
+}
+
+.cross-references li {
+    margin-bottom: 0.25rem;
+}
+
+/* Other days navigation */
+.other-days {
+    margin: 2rem 0;
+    padding: 1rem;
+    background-color: #f8f9fa;
+    border-radius: 6px;
+}
+
+.day-nav {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+}
+
+.day-nav a {
+    padding: 0.5rem 1rem;
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    text-decoration: none;
+    color: #2980b9;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+}
+
+.day-nav a:hover {
+    background-color: #e9ecef;
+    text-decoration: none;
+}
+
+/* Nearby areas */
+.nearby-areas {
+    margin: 2rem 0;
+}
+
+.nearby-areas ul {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 0.5rem;
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0 0 0;
+}
+
+.nearby-areas li {
+    background-color: #f8f9fa;
+    border-radius: 4px;
+    border: 1px solid #dee2e6;
+}
+
+.nearby-areas a {
+    display: block;
+    padding: 0.75rem;
+    text-decoration: none;
+    color: #2980b9;
+}
+
+.nearby-areas a:hover {
+    background-color: #e9ecef;
+    text-decoration: none;
+}
+
+/* Today's meetings specific styling */
+.todays-meetings {
+    margin: 1rem 0;
+}
+
+.todays-meetings .region-meetings {
+    margin-bottom: 2rem;
+}
+
+/* Meeting summary */
+.meeting-summary {
+    margin: 1rem 0;
+    padding: 1rem;
+    background-color: #e8f4f8;
+    border-radius: 6px;
+    border-left: 3px solid #2980b9;
+}
+
+/* Homepage-specific styling */
+.regions-overview {
+    margin: 2rem 0;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+    margin: 1rem 0;
+}
+
+.stats-grid .stat {
+    text-align: center;
+    padding: 1rem;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    border: 2px solid #dee2e6;
+}
+
+.stats-grid .stat strong {
+    font-size: 1.5rem;
+    color: #2980b9;
+    display: block;
+}
+
+.region-card.featured {
+    border: 2px solid #2980b9;
+    background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+    transition: all 0.3s ease;
+}
+
+.region-card.featured:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 20px rgba(41, 128, 185, 0.2);
+    border-color: #1976d2;
+}
+
+.region-card.featured h4 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    color: #1976d2;
+    font-size: 1.3rem;
+}
+
+.region-card.featured h4 a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.region-highlights {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+}
+
+.region-highlights span {
+    background-color: #e3f2fd;
+    color: #1976d2;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.quick-access-home {
+    margin: 2rem 0;
+    padding: 1.5rem;
+    background: linear-gradient(135deg, #e8f5e8 0%, #f0f8ff 100%);
+    border-radius: 8px;
+    border-left: 4px solid #28a745;
+}
+
+.quick-access-home h4 {
+    margin-top: 0;
+    color: #155724;
+}
+
+.quick-links-home {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.quick-link-home {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    background-color: #fff;
+    border: 2px solid #dee2e6;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #333;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.quick-link-home:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    text-decoration: none;
+    color: #333;
+}
+
+.quick-link-home.today { border-color: #007bff; }
+.quick-link-home.today:hover { border-color: #0056b3; background-color: #f8f9ff; }
+
+.quick-link-home.online { border-color: #28a745; }
+.quick-link-home.online:hover { border-color: #1e7e34; background-color: #f8fff8; }
+
+.quick-link-home.accessible { border-color: #ffc107; }
+.quick-link-home.accessible:hover { border-color: #e0a800; background-color: #fffdf8; }
+
+.quick-link-home .icon {
+    font-size: 2rem;
+    margin-right: 1rem;
+    flex-shrink: 0;
+}
+
+.quick-link-home div {
+    flex-grow: 1;
+}
+
+.quick-link-home strong {
+    display: block;
+    margin-bottom: 0.25rem;
+    font-size: 1rem;
+}
+
+.quick-link-home small {
+    color: #666;
+    font-size: 0.85rem;
+}
+
+/* Enhanced responsive design */
+@media screen and (max-width: 768px) {
+    .region-stats, .subregion-stats, .meetings-stats {
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    
+    .quick-links {
+        grid-template-columns: 1fr;
+    }
+    
+    .quick-links-home {
+        grid-template-columns: 1fr;
+    }
+    
+    .day-nav {
+        justify-content: center;
+    }
+    
+    .nearby-areas ul {
+        grid-template-columns: 1fr;
+    }
+    
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .region-highlights {
+        justify-content: center;
     }
 }
